@@ -57,7 +57,7 @@ async def auth_callback(code: str):
     tokens = await handle_callback(code)
     from fastapi.responses import RedirectResponse
     import urllib.parse
-    frontend_url = "http://localhost:5173"
+    frontend_url = settings.FRONTEND_URL
     params = urllib.parse.urlencode({
         "token": tokens["access_token"],
         "user": urllib.parse.quote(json.dumps(tokens["user"])),

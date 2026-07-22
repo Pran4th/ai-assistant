@@ -10,6 +10,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { api } from '../services/api.js'
 
 const authStore = useAuthStore()
 const isAuthenticated = ref(false)
@@ -34,8 +35,7 @@ onMounted(() => {
 
 const login = async () => {
   try {
-    const response = await fetch('/auth/google')
-    const data = await response.json()
+    const data = await api.getAuthUrl()
     window.location.href = data.auth_url
   } catch (err) {
     console.error('Login failed:', err)
