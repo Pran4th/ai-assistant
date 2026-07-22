@@ -84,6 +84,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import VoiceInput from './VoiceInput.vue'
 import AuthButton from './AuthButton.vue'
+import { getWsUrl } from '../services/api.js'
 
 const messages = ref([])
 const inputMessage = ref('')
@@ -102,9 +103,7 @@ onUnmounted(() => {
 })
 
 const connectWebSocket = (token) => {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-  const host = window.location.host
-  ws = new WebSocket(`${protocol}//${host}/ws/chat?token=${token}`)
+  ws = new WebSocket(`${getWsUrl()}/ws/chat?token=${token}`)
 
   ws.onopen = () => { isConnected.value = true }
   ws.onmessage = (event) => {
