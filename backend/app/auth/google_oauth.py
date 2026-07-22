@@ -25,11 +25,10 @@ _creds_store: dict = {}
 async def _get_redis():
     try:
         import redis.asyncio as redis
-        r = redis.Redis(
-            host=settings.REDIS_HOST,
-            port=settings.REDIS_PORT,
+        r = redis.from_url(
+            settings.redis_connection_url,
             decode_responses=True,
-            socket_connect_timeout=1,
+            socket_connect_timeout=2,
         )
         await r.ping()
         return r

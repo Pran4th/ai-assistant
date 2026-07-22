@@ -18,11 +18,21 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
     GROQ_API_KEY: str = ""
 
-    REDIS_HOST: str = "redis"
+    REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
     REDIS_URL: str = ""
+    REDIS_TOKEN: str = ""
 
     CORS_ORIGINS: List[str] = ["http://localhost:5173"]
+
+    @property
+    def redis_connection_url(self) -> str:
+        if self.REDIS_URL:
+            host = self.REDIS_URL.replace("https://", "").replace("http://", "")
+            if self.REDIS_TOKEN:
+                return f"rediss://default:{self.REDIS_TOKEN}@{host}:6379"
+            return self.REDIS_URL
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
     class Config:
         env_file = Path(__file__).resolve().parent.parent.parent / ".env"

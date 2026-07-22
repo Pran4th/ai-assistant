@@ -6,9 +6,8 @@ from app.config import settings
 
 class ConversationManager:
     def __init__(self):
-        self.redis = redis.Redis(
-            host=settings.REDIS_HOST,
-            port=settings.REDIS_PORT,
+        self.redis = redis.from_url(
+            settings.redis_connection_url,
             decode_responses=True,
         )
         self.max_history = 10
