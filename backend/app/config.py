@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = ""
     REDIS_TOKEN: str = ""
 
-    CORS_ORIGINS: List[str] = ["http://localhost:5173"]
+    CORS_ORIGINS: List[str] = ["http://localhost:5173", "https://ai-assistant-rho-blond.vercel.app"]
 
     @property
     def redis_connection_url(self) -> str:
